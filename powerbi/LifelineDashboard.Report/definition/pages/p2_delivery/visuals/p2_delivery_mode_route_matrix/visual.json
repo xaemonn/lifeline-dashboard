@@ -1,0 +1,121 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "p2_delivery_mode_route_matrix",
+  "position": {
+    "x": 16,
+    "y": 180,
+    "z": 10,
+    "height": 262,
+    "width": 500,
+    "tabOrder": 10
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Columns": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_shipment"
+                    }
+                  },
+                  "Property": "fulfill_via"
+                }
+              },
+              "queryRef": "fact_shipment.fulfill_via",
+              "nativeQueryRef": "fulfill_via",
+              "active": true,
+              "displayName": "Route"
+            }
+          ]
+        },
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "fact_shipment"
+                    }
+                  },
+                  "Property": "shipment_mode"
+                }
+              },
+              "queryRef": "fact_shipment.shipment_mode",
+              "nativeQueryRef": "shipment_mode",
+              "active": true,
+              "displayName": "Shipment mode"
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Late Rate %"
+                }
+              },
+              "queryRef": "_Measures.Late Rate %",
+              "nativeQueryRef": "Late Rate %"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "_Measures"
+                    }
+                  },
+                  "Property": "Line Items"
+                }
+              },
+              "queryRef": "_Measures.Line Items",
+              "nativeQueryRef": "Line Items"
+            }
+          ]
+        }
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Late rate: shipment mode x fulfilment route'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,51 @@
+/// Top 25 Apriori rules whose consequent is LATE (03_data_mining.py).
+table association_rules
+	lineageTag: 58a72917-b1e7-5fb6-aa08-70b8d14317bf
+
+	column antecedents
+		dataType: string
+		lineageTag: 255767c3-4563-5f8b-83cc-29a765acb9fa
+		summarizeBy: none
+		sourceColumn: antecedents
+
+	column support
+		dataType: double
+		formatString: 0.0%
+		lineageTag: dcfd8c89-f90a-5d27-8afc-6039afc67dea
+		summarizeBy: none
+		sourceColumn: support
+
+	column confidence
+		dataType: double
+		formatString: 0.0%
+		lineageTag: 53d155d0-1b69-59c3-8ad1-5ee69497c1bf
+		summarizeBy: none
+		sourceColumn: confidence
+
+	column lift
+		dataType: double
+		formatString: 0.00
+		lineageTag: 510856c3-055b-56be-be9e-1d9c6c7151dd
+		summarizeBy: none
+		sourceColumn: lift
+
+	column rank
+		dataType: int64
+		formatString: 0
+		lineageTag: 16a2dc4d-583e-5573-91b2-e6f70a031ecd
+		summarizeBy: none
+		sourceColumn: rank
+
+	partition association_rules = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\association_rules.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"antecedents", type text}, {"support", type number}, {"confidence", type number}, {"lift", type number}, {"rank", Int64.Type}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

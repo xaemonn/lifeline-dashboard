@@ -1,0 +1,223 @@
+/// All report measures, grouped in display folders.
+table _Measures
+	lineageTag: 23fcf251-a75d-5667-98a9-e864b273f61a
+
+	/// Number of shipment line items.
+	measure 'Line Items' = COUNTROWS ( fact_shipment )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 50cd4f48-90d6-5945-bd2b-65359c998fd9
+
+	/// Distinct advance shipment notices / delivery notes (physical consignments).
+	measure 'Shipments (ASN/DN)' = DISTINCTCOUNT ( fact_shipment[asn_dn_no] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: a70301d3-f649-58d8-a90e-0976dc7418ae
+
+	measure 'Countries Served' = DISTINCTCOUNT ( fact_shipment[country_key] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: ebc85a17-b537-5c02-9ac4-3006a6990782
+
+	measure 'Vendors Used' = DISTINCTCOUNT ( fact_shipment[vendor_key] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: c9c5c76c-10a5-5696-a62f-2e36d545d7e2
+
+	/// Packs x units per pack.
+	measure 'Units Shipped' = SUM ( fact_shipment[units_total] )
+		formatString: #,0
+		displayFolder: Volume
+		lineageTag: 54e15302-241d-5e0d-b93a-81b24c8c779d
+
+	/// Line item value, USD.
+	measure 'Commodity Value' = SUM ( fact_shipment[line_value_usd] )
+		formatString: \$#,0
+		displayFolder: Cost
+		lineageTag: 598070c2-37de-5dd1-b680-586e14618756
+
+	/// Freight in USD, each consignment counted once (shared line items carry 0).
+	measure 'Freight Cost' = SUM ( fact_shipment[freight_usd_alloc] )
+		formatString: \$#,0
+		displayFolder: Cost
+		lineageTag: 9a9d499c-4bbe-5ea1-a339-e3e695008054
+
+	measure 'Insurance Cost' = SUM ( fact_shipment[insurance_usd] )
+		formatString: \$#,0
+		displayFolder: Cost
+		lineageTag: 93db853a-56f8-52f6-aa3d-d34f01c94cf6
+
+	/// Commodity value + allocated freight + insurance.
+	measure 'Landed Cost' = SUM ( fact_shipment[total_landed_cost_usd] )
+		formatString: \$#,0
+		displayFolder: Cost
+		lineageTag: eddd7e95-f447-520b-ad86-989cd5a7683c
+
+	/// Weight in kg, each consignment counted once.
+	measure 'Total Weight (kg)' = SUM ( fact_shipment[weight_kg_alloc] )
+		formatString: #,0
+		displayFolder: Cost
+		lineageTag: d6c7a267-158f-5da7-8629-829d9eda5744
+
+	/// Freight / commodity value, only for line items whose freight is known.
+	measure 'Freight % of Value' =
+			VAR _f = CALCULATE ( SUM ( fact_shipment[freight_usd_alloc] ), KEEPFILTERS ( fact_shipment[freight_status] IN { "Recorded", "Shared with ID" } ) )
+			VAR _v = CALCULATE ( SUM ( fact_shipment[line_value_usd] ), KEEPFILTERS ( fact_shipment[freight_status] IN { "Recorded", "Shared with ID" } ) )
+			RETURN
+			    DIVIDE ( _f, _v )
+		formatString: 0.0%
+		displayFolder: Cost
+		lineageTag: f87872ff-382f-541c-8283-deb6ce62cd09
+
+	/// Weighted freight per kg over consignments with both freight and weight recorded.
+	measure 'Freight per kg' =
+			VAR _f = CALCULATE ( SUM ( fact_shipment[freight_usd_alloc] ), KEEPFILTERS ( fact_shipment[freight_status] = "Recorded" ), KEEPFILTERS ( fact_shipment[weight_status] = "Recorded" ) )
+			VAR _w = CALCULATE ( SUM ( fact_shipment[weight_kg_alloc] ), KEEPFILTERS ( fact_shipment[freight_status] = "Recorded" ), KEEPFILTERS ( fact_shipment[weight_status] = "Recorded" ) )
+			RETURN
+			    DIVIDE ( _f, _w )
+		formatString: \$#,0.00
+		displayFolder: Cost
+		lineageTag: 6762ce46-3aff-5235-b315-e9364c3b9cd8
+
+	/// Share of line items with a usable freight value - read cost KPIs against this.
+	measure 'Freight Recorded %' =
+			DIVIDE (
+			    CALCULATE ( [Line Items], KEEPFILTERS ( fact_shipment[freight_status] IN { "Recorded", "Shared with ID" } ) ),
+			    [Line Items]
+			)
+		formatString: 0.0%
+		displayFolder: Cost
+		lineageTag: 41cd0b9a-153d-5419-8f03-78ee157e0698
+
+	measure 'Avg Unit Price' = AVERAGE ( fact_shipment[unit_price_usd] )
+		formatString: \$#,0.000
+		displayFolder: Cost
+		lineageTag: 7190f0f5-87ff-5f7e-86a2-396a7a9cc33d
+
+	measure 'Late Line Items' = CALCULATE ( [Line Items], KEEPFILTERS ( fact_shipment[is_late] = 1 ) )
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: 966b7cbc-ca83-5c14-a7b2-d1bf110e47fe
+
+	/// Share of line items delivered after the scheduled date.
+	measure 'Late Rate %' = DIVIDE ( [Late Line Items], [Line Items] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 7f763748-1842-5f19-a5fc-220227553a83
+
+	measure 'On-Time Rate %' = IF ( NOT ISBLANK ( [Line Items] ), 1 - [Late Rate %] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 68570989-a502-5051-a504-6ec055aa82c7
+
+	measure 'Avg Delay When Late (days)' = CALCULATE ( AVERAGE ( fact_shipment[delay_days] ), KEEPFILTERS ( fact_shipment[is_late] = 1 ) )
+		formatString: 0.0
+		displayFolder: Delivery
+		lineageTag: 7086d0aa-2ce0-5d26-8347-2751b87f3866
+
+	/// PO sent to delivery; only Direct Drop orders have a PO date.
+	measure 'Median Lead Time (days)' = MEDIAN ( fact_shipment[lead_time_days] )
+		formatString: 0
+		displayFolder: Delivery
+		lineageTag: 8dc53a40-cc35-51f6-b1f9-5bef7d019d1c
+
+	measure 'Severe Late (>30d)' = CALCULATE ( [Line Items], KEEPFILTERS ( fact_shipment[delivery_status] = "Late >30d" ) )
+		formatString: #,0
+		displayFolder: Delivery
+		lineageTag: 332a55df-536c-511b-bca9-d59bd7649380
+
+	measure 'Late Rate % PY' = CALCULATE ( [Late Rate %], SAMEPERIODLASTYEAR ( dim_date[Date] ) )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: 0d010e66-65c5-53d9-bf88-ba5aa7f074b5
+
+	/// Change in late rate vs previous year, percentage points.
+	measure 'Late Rate Change (pp)' = IF ( NOT ISBLANK ( [Late Rate % PY] ), ( [Late Rate %] - [Late Rate % PY] ) * 100 )
+		formatString: +0.0;-0.0;0.0
+		displayFolder: Delivery
+		lineageTag: 39af2845-cc30-55a1-9a28-18916d25d475
+
+	/// Late rate using the inactive relationship on scheduled date.
+	measure 'Late Rate by Scheduled Date %' = CALCULATE ( [Late Rate %], USERELATIONSHIP ( fact_shipment[scheduled_date], dim_date[Date] ) )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: bb262393-da05-5ff0-a17e-71ae8fd586e0
+
+	/// Late rate shown only where there are at least 50 line items (hides noisy small groups).
+	measure 'Late Rate % (min 50)' = IF ( [Line Items] >= 50, [Late Rate %] )
+		formatString: 0.0%
+		displayFolder: Delivery
+		lineageTag: d8d10e45-c1b2-5b3f-aa86-83fdac22bf25
+
+	/// Red at 20% or more, amber at 12% or more, green otherwise.
+	measure 'Late Rate Colour' =
+			SWITCH (
+			    TRUE (),
+			    ISBLANK ( [Late Rate %] ), BLANK (),
+			    [Late Rate %] >= 0.20, "#C0392B",
+			    [Late Rate %] >= 0.12, "#E8A33D",
+			    "#2E8B57"
+			)
+		displayFolder: Display
+		lineageTag: 9b7f6a8d-205e-5d23-9c8f-431a80ec14cb
+
+	measure 'Direct Drop Value' = CALCULATE ( [Commodity Value], KEEPFILTERS ( fact_shipment[fulfill_via] = "Direct Drop" ) )
+		formatString: \$#,0
+		displayFolder: Vendor
+		lineageTag: 85ab2d84-2477-5edd-8630-d497ed50130c
+
+	/// Share of value shipped from regional distribution centres.
+	measure 'RDC Share of Value %' = DIVIDE ( CALCULATE ( [Commodity Value], KEEPFILTERS ( fact_shipment[fulfill_via] = "From RDC" ) ), [Commodity Value] )
+		formatString: 0.0%
+		displayFolder: Vendor
+		lineageTag: b426c16d-eb65-5427-8342-23e1d4f8f959
+
+	measure 'Vendor Value Share %' = DIVIDE ( [Commodity Value], CALCULATE ( [Commodity Value], ALL ( dim_vendor ) ) )
+		formatString: 0.0%
+		displayFolder: Vendor
+		lineageTag: 65641161-7057-5305-a800-e2410e28141f
+
+	/// Concentration of direct-drop spend in the five largest vendors.
+	measure 'Top 5 Direct Vendor Share %' =
+			VAR _all = CALCULATE ( [Direct Drop Value], ALL ( dim_vendor ) )
+			VAR _top = SUMX ( TOPN ( 5, ALL ( dim_vendor[vendor_short] ), [Direct Drop Value] ), [Direct Drop Value] )
+			RETURN
+			    DIVIDE ( _top, _all )
+		formatString: 0.0%
+		displayFolder: Vendor
+		lineageTag: 64e9fd25-bd85-5930-b879-3c2eb63d45a4
+
+	/// Pareto line: running share of direct-drop value, largest vendor first.
+	measure 'Cumulative Direct Vendor Share %' =
+			VAR _cur = [Direct Drop Value]
+			VAR _tbl = FILTER ( ADDCOLUMNS ( ALLSELECTED ( dim_vendor[vendor_short] ), "@v", [Direct Drop Value] ), [@v] > 0 )
+			RETURN
+			    IF ( _cur > 0, DIVIDE ( SUMX ( FILTER ( _tbl, [@v] >= _cur ), [@v] ), SUMX ( _tbl, [@v] ) ) )
+		formatString: 0.0%
+		displayFolder: Vendor
+		lineageTag: 35194139-995e-55a5-ade8-488cea5a7567
+
+	/// 60% on-time rate + 40% cost efficiency (freight at 20% of value or more scores 0).
+	measure 'Vendor Score (0-100)' =
+			VAR _rel = [On-Time Rate %]
+			VAR _fr = [Freight % of Value]
+			VAR _cost = IF ( ISBLANK ( _fr ), 0.5, 1 - MIN ( 1, _fr * 5 ) )
+			RETURN
+			    IF ( NOT ISBLANK ( _rel ), ROUND ( 100 * ( 0.6 * _rel + 0.4 * _cost ), 0 ) )
+		formatString: 0
+		displayFolder: Vendor
+		lineageTag: cb3fc56c-b6b2-5f6c-8038-ac52adfd7f9e
+
+	column Placeholder
+		dataType: string
+		isHidden
+		lineageTag: 8eeb7ed2-7df2-547e-abaa-b1cde7835d3b
+		summarizeBy: none
+		sourceColumn: Placeholder
+
+	partition _Measures = m
+		mode: import
+		source = #table(type table [Placeholder = text], {})
+
+	annotation PBI_ResultType = Table
+

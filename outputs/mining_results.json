@@ -1,0 +1,139 @@
+{
+  "classification": {
+    "train_rows": 6507,
+    "test_rows": 3817,
+    "late_rate_train": 0.093,
+    "late_rate_test": 0.153,
+    "logistic_regression": {
+      "roc_auc_time_split": 0.61,
+      "report": {
+        "precision": 0.1951219512195122,
+        "recall": 0.9452054794520548,
+        "f1-score": 0.323469088778201,
+        "support": 584.0
+      }
+    },
+    "gradient_boosting": {
+      "roc_auc_time_split": 0.72,
+      "report": {
+        "precision": 0.329608938547486,
+        "recall": 0.20205479452054795,
+        "f1-score": 0.2505307855626327,
+        "support": 584.0
+      },
+      "roc_auc_random_split": 0.887
+    }
+  },
+  "regression": {
+    "rows_used": 5963,
+    "baseline_mode_x_weight": {
+      "MAE_usd": 10883.0,
+      "R2": -1.181
+    },
+    "gradient_boosting": {
+      "MAE_usd": 4006.0,
+      "R2": 0.636
+    },
+    "median_freight_usd_test": 6195.0
+  },
+  "clustering": {
+    "countries_clustered": 24,
+    "silhouette_by_k": {
+      "2": 0.601,
+      "3": 0.333,
+      "4": 0.25,
+      "5": 0.281,
+      "6": 0.285
+    },
+    "chosen_k": 3,
+    "profiles": [
+      {
+        "cluster": 0,
+        "late_rate": 0.088,
+        "p75_delay": 0.0,
+        "air_share": 0.913,
+        "rdc_share": 0.385,
+        "freight_pct": 0.106,
+        "line_items": 278.688,
+        "countries": "Botswana, Cameroon, Congo, DRC, Dominican Republic, Ethiopia, Ghana, Guyana, Haiti, Kenya, Namibia, Nigeria, Rwanda, South Sudan, Sudan, Swaziland, Vietnam",
+        "segment": "Reliable air-served"
+      },
+      {
+        "cluster": 1,
+        "late_rate": 0.135,
+        "p75_delay": 0.0,
+        "air_share": 0.446,
+        "rdc_share": 0.638,
+        "freight_pct": 0.038,
+        "line_items": 805.571,
+        "countries": "C\u00f4te d'Ivoire, Mozambique, South Africa, Tanzania, Uganda, Zambia, Zimbabwe",
+        "segment": "High-volume truck hubs"
+      },
+      {
+        "cluster": 2,
+        "late_rate": 0.388,
+        "p75_delay": 6.75,
+        "air_share": 1.0,
+        "rdc_share": 0.735,
+        "freight_pct": 0.102,
+        "line_items": 98.0,
+        "countries": "Burundi",
+        "segment": "Outlier (very late)"
+      }
+    ]
+  },
+  "association_rules": {
+    "baseline_late_rate": 0.115,
+    "rules_found": 66,
+    "top_rules": [
+      {
+        "antecedents": "fulfill_via=From RDC + shipment_mode=Truck + value_band=high",
+        "support": 0.024,
+        "confidence": 0.262,
+        "lift": 2.281
+      },
+      {
+        "antecedents": "product_group=ARV + shipment_mode=Truck + value_band=high",
+        "support": 0.025,
+        "confidence": 0.262,
+        "lift": 2.28
+      },
+      {
+        "antecedents": "shipment_mode=Truck + sub_classification=Adult + value_band=high",
+        "support": 0.023,
+        "confidence": 0.261,
+        "lift": 2.271
+      },
+      {
+        "antecedents": "shipment_mode=Truck + value_band=high",
+        "support": 0.025,
+        "confidence": 0.259,
+        "lift": 2.252
+      },
+      {
+        "antecedents": "fulfill_via=From RDC + region=Southern Africa + shipment_mode=Truck",
+        "support": 0.026,
+        "confidence": 0.243,
+        "lift": 2.115
+      },
+      {
+        "antecedents": "region=Southern Africa + shipment_mode=Truck + value_band=high",
+        "support": 0.015,
+        "confidence": 0.24,
+        "lift": 2.093
+      },
+      {
+        "antecedents": "fulfill_via=From RDC + shipment_mode=Truck + sub_classification=Adult",
+        "support": 0.035,
+        "confidence": 0.24,
+        "lift": 2.086
+      },
+      {
+        "antecedents": "fulfill_via=From RDC + product_group=ARV + shipment_mode=Truck",
+        "support": 0.043,
+        "confidence": 0.237,
+        "lift": 2.066
+      }
+    ]
+  }
+}

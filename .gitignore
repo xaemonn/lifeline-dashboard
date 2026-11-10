@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# Derived data: regenerate with scripts/01_clean_transform.py and scripts/03_data_mining.py.
+# The USAID dataset is CC BY-ND 4.0, so only the unmodified original (data/raw) is shared.
+data/processed/
+data/powerbi/
+
+# Power BI Desktop local files (cache holds data, settings are per machine)
+**/.pbi/localSettings.json
+**/.pbi/cache.abf
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/

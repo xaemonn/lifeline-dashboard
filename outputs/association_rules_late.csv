@@ -1,0 +1,67 @@
+antecedents,support,confidence,lift
+fulfill_via=From RDC + shipment_mode=Truck + value_band=high,0.024,0.262,2.281
+product_group=ARV + shipment_mode=Truck + value_band=high,0.025,0.262,2.28
+shipment_mode=Truck + sub_classification=Adult + value_band=high,0.023,0.261,2.271
+shipment_mode=Truck + value_band=high,0.025,0.259,2.252
+fulfill_via=From RDC + region=Southern Africa + shipment_mode=Truck,0.026,0.243,2.115
+region=Southern Africa + shipment_mode=Truck + value_band=high,0.015,0.24,2.093
+fulfill_via=From RDC + shipment_mode=Truck + sub_classification=Adult,0.035,0.24,2.086
+fulfill_via=From RDC + product_group=ARV + shipment_mode=Truck,0.043,0.237,2.066
+product_group=ARV + region=East Africa + shipment_mode=Truck,0.011,0.236,2.052
+fulfill_via=From RDC + shipment_mode=Truck,0.043,0.232,2.024
+fulfill_via=From RDC + sub_classification=Pediatric + value_band=low,0.012,0.225,1.955
+fulfill_via=From RDC + region=East Africa + shipment_mode=Truck,0.011,0.224,1.946
+region=East Africa + shipment_mode=Truck,0.011,0.223,1.938
+fulfill_via=From RDC + shipment_mode=Air + sub_classification=Pediatric,0.012,0.222,1.936
+region=Southern Africa + sub_classification=Adult + value_band=high,0.021,0.21,1.83
+fulfill_via=From RDC + shipment_mode=Truck + value_band=mid,0.014,0.208,1.81
+fulfill_via=From RDC + sub_classification=Pediatric,0.021,0.207,1.805
+fulfill_via=From RDC + product_group=ARV + sub_classification=Pediatric,0.021,0.207,1.805
+product_group=ARV + region=Southern Africa + value_band=high,0.022,0.207,1.8
+fulfill_via=From RDC + region=Southern Africa + value_band=high,0.015,0.203,1.766
+fulfill_via=From RDC + region=Southern Africa + sub_classification=Adult,0.023,0.194,1.689
+fulfill_via=From RDC + product_group=ARV + region=Southern Africa,0.028,0.193,1.681
+region=Southern Africa + value_band=high,0.024,0.192,1.675
+fulfill_via=From RDC + product_group=ARV + value_band=high,0.036,0.19,1.652
+fulfill_via=From RDC + sub_classification=Adult + value_band=high,0.034,0.189,1.642
+fulfill_via=From RDC + product_group=ARV + region=East Africa,0.023,0.187,1.63
+fulfill_via=From RDC + region=Southern Africa,0.028,0.187,1.625
+fulfill_via=From RDC + value_band=high,0.036,0.187,1.624
+product_group=ARV + shipment_mode=Truck + value_band=mid,0.014,0.183,1.589
+shipment_mode=Truck + value_band=mid,0.014,0.179,1.559
+fulfill_via=From RDC + region=East Africa,0.023,0.178,1.549
+fulfill_via=From RDC + product_group=ARV,0.09,0.177,1.544
+fulfill_via=From RDC + region=East Africa + sub_classification=Adult,0.018,0.176,1.534
+product_group=ARV + region=East Africa + value_band=high,0.01,0.174,1.517
+fulfill_via=From RDC + product_group=ARV + value_band=low,0.024,0.173,1.51
+shipment_mode=Truck + sub_classification=Adult,0.036,0.173,1.503
+product_group=ARV + shipment_mode=Truck + sub_classification=Adult,0.036,0.173,1.503
+fulfill_via=From RDC,0.09,0.172,1.493
+fulfill_via=From RDC + shipment_mode=Air + value_band=low,0.017,0.171,1.491
+fulfill_via=From RDC + sub_classification=Adult,0.069,0.17,1.481
+fulfill_via=From RDC + product_group=ARV + sub_classification=Adult,0.069,0.17,1.481
+fulfill_via=From RDC + product_group=ARV + value_band=mid,0.03,0.167,1.458
+fulfill_via=From RDC + product_group=ARV + shipment_mode=Air,0.039,0.165,1.439
+fulfill_via=From RDC + value_band=low,0.024,0.165,1.436
+fulfill_via=From RDC + sub_classification=Adult + value_band=mid,0.023,0.163,1.423
+product_group=ARV + shipment_mode=Truck,0.044,0.163,1.422
+fulfill_via=From RDC + value_band=mid,0.03,0.161,1.404
+sub_classification=Adult + value_band=high,0.042,0.161,1.403
+product_group=ARV + sub_classification=Adult + value_band=high,0.042,0.161,1.403
+product_group=ARV + value_band=high,0.044,0.161,1.401
+shipment_mode=Truck,0.044,0.161,1.4
+fulfill_via=From RDC + shipment_mode=Air,0.039,0.159,1.385
+value_band=high,0.052,0.157,1.366
+fulfill_via=From RDC + shipment_mode=Air + value_band=mid,0.014,0.157,1.364
+product_group=ARV + region=Southern Africa + value_band=mid,0.012,0.156,1.358
+fulfill_via=From RDC + region=East Africa + shipment_mode=Air,0.012,0.156,1.357
+region=East Africa + value_band=high,0.012,0.152,1.322
+region=West Africa + value_band=high,0.014,0.152,1.32
+region=Southern Africa + shipment_mode=Truck + sub_classification=Adult,0.023,0.151,1.311
+fulfill_via=From RDC + shipment_mode=Air + sub_classification=Adult,0.027,0.148,1.291
+region=Southern Africa + sub_classification=Adult,0.033,0.144,1.255
+product_group=ARV + region=Southern Africa + sub_classification=Adult,0.033,0.144,1.255
+product_group=ARV + region=East Africa,0.024,0.144,1.251
+fulfill_via=From RDC + sub_classification=Adult + value_band=low,0.012,0.141,1.226
+product_group=ARV + region=Southern Africa + shipment_mode=Truck,0.027,0.139,1.209
+region=Southern Africa + shipment_mode=Truck,0.027,0.138,1.201

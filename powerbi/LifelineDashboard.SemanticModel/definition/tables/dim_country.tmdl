@@ -1,0 +1,50 @@
+/// Destination countries with region and the K-means segment from 03_data_mining.py.
+table dim_country
+	lineageTag: 012c656b-f9bf-5cd9-9b0e-21870dbdf106
+
+	column country_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 948bf35c-2abc-59b8-b9dc-2e0309bba07f
+		summarizeBy: none
+		sourceColumn: country_key
+
+	column country
+		dataType: string
+		lineageTag: d0dbd32a-e7c1-57cb-9140-9338bbade0c8
+		summarizeBy: none
+		sourceColumn: country
+
+	column region
+		dataType: string
+		lineageTag: 4426c827-0694-548d-af41-cc3ccba4bca2
+		summarizeBy: none
+		sourceColumn: region
+
+	column segment
+		dataType: string
+		lineageTag: 671a28f0-9e16-5bda-a730-21186e697e37
+		summarizeBy: none
+		sourceColumn: segment
+
+	partition dim_country = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\dim_country.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"country_key", Int64.Type}, {"country", type text}, {"region", type text}}, "en-US"),
+				    SegSource = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\country_segments.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    SegPromoted = Table.PromoteHeaders(SegSource, [PromoteAllScalars = true]),
+				    Seg = Table.SelectColumns(SegPromoted, {"country", "segment"}),
+				    Joined = Table.NestedJoin(Typed, {"country"}, Seg, {"country"}, "seg", JoinKind.LeftOuter),
+				    Expanded = Table.ExpandTableColumn(Joined, "seg", {"segment"}, {"segment"}),
+				    Filled = Table.ReplaceValue(Expanded, null, "Not clustered (<20 line items)", Replacer.ReplaceValue, {"segment"}),
+				    Result = Table.TransformColumnTypes(Filled, {{"segment", type text}})
+				in
+				    Result
+
+	annotation PBI_ResultType = Table
+

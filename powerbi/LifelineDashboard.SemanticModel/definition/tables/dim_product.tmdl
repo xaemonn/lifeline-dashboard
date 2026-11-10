@@ -1,0 +1,80 @@
+/// Products: group, molecule, brand, dosage form.
+table dim_product
+	lineageTag: ab10c0ab-91e3-5159-a0af-3c3a9a8f6bc5
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 57e85cb3-8b28-58a9-ba09-0c080c2cd615
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column item_description
+		dataType: string
+		lineageTag: 3aad60e6-fb10-51c7-a534-d5b954a010e6
+		summarizeBy: none
+		sourceColumn: item_description
+
+	column product_group
+		dataType: string
+		lineageTag: 0763a3f7-5e57-5db1-ac7e-0e92aa46c3a8
+		summarizeBy: none
+		sourceColumn: product_group
+
+	column sub_classification
+		dataType: string
+		lineageTag: 795693c6-46bb-5ce9-a4e6-878240d61d9a
+		summarizeBy: none
+		sourceColumn: sub_classification
+
+	column molecule
+		dataType: string
+		lineageTag: 7b8d7c2f-ffe2-5107-99af-c80133fb0cb1
+		summarizeBy: none
+		sourceColumn: molecule
+
+	column brand
+		dataType: string
+		lineageTag: 499ad252-e3b8-57b7-bafd-e7f477feb690
+		summarizeBy: none
+		sourceColumn: brand
+
+	column dosage
+		dataType: string
+		lineageTag: 993beb01-1430-5a7a-af27-6f20a0fc561f
+		summarizeBy: none
+		sourceColumn: dosage
+
+	column dosage_form
+		dataType: string
+		lineageTag: d0bc69df-36c6-58af-af11-f4a5293587d5
+		summarizeBy: none
+		sourceColumn: dosage_form
+
+	column units_per_pack
+		dataType: int64
+		formatString: 0
+		lineageTag: b8021349-d553-522e-b7f0-006af28d5840
+		summarizeBy: none
+		sourceColumn: units_per_pack
+
+	column first_line
+		dataType: boolean
+		lineageTag: 6d597bfe-d093-566f-b964-efa80364af88
+		summarizeBy: none
+		sourceColumn: first_line
+
+	partition dim_product = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\dim_product.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"product_key", Int64.Type}, {"item_description", type text}, {"product_group", type text}, {"sub_classification", type text}, {"molecule", type text}, {"brand", type text}, {"dosage", type text}, {"dosage_form", type text}, {"units_per_pack", Int64.Type}, {"first_line", type logical}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

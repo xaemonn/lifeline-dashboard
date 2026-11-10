@@ -1,0 +1,37 @@
+/// Vendors ("SCMS from RDC" = regional distribution centres).
+table dim_vendor
+	lineageTag: 759e117f-1110-52da-af1d-33869448a426
+
+	column vendor_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 07d47ef3-c72e-5c4d-919b-60897fac683b
+		summarizeBy: none
+		sourceColumn: vendor_key
+
+	column vendor
+		dataType: string
+		lineageTag: df8473e4-774f-527d-ac1b-f649ff68e663
+		summarizeBy: none
+		sourceColumn: vendor
+
+	column vendor_short
+		dataType: string
+		lineageTag: 30ddcc49-2e1d-5772-b2dd-5dba2a5cc21a
+		summarizeBy: none
+		sourceColumn: vendor_short
+
+	partition dim_vendor = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\dim_vendor.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"vendor_key", Int64.Type}, {"vendor", type text}, {"vendor_short", type text}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

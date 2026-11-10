@@ -1,0 +1,4 @@
+cluster,late_rate,p75_delay,air_share,rdc_share,freight_pct,line_items,countries,segment
+0,0.088,0.0,0.913,0.385,0.106,278.688,"Botswana, Cameroon, Congo, DRC, Dominican Republic, Ethiopia, Ghana, Guyana, Haiti, Kenya, Namibia, Nigeria, Rwanda, South Sudan, Sudan, Swaziland, Vietnam",Reliable air-served
+1,0.135,0.0,0.446,0.638,0.038,805.571,"Côte d'Ivoire, Mozambique, South Africa, Tanzania, Uganda, Zambia, Zimbabwe",High-volume truck hubs
+2,0.388,6.75,1.0,0.735,0.102,98.0,Burundi,Outlier (very late)

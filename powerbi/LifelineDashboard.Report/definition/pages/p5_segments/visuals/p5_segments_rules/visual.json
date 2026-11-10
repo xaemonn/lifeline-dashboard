@@ -1,0 +1,145 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.14.0/schema.json",
+  "name": "p5_segments_rules",
+  "position": {
+    "x": 16,
+    "y": 388,
+    "z": 8,
+    "height": 324,
+    "width": 612,
+    "tabOrder": 8
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "association_rules"
+                    }
+                  },
+                  "Property": "rank"
+                }
+              },
+              "queryRef": "association_rules.rank",
+              "nativeQueryRef": "rank",
+              "displayName": "#"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "association_rules"
+                    }
+                  },
+                  "Property": "antecedents"
+                }
+              },
+              "queryRef": "association_rules.antecedents",
+              "nativeQueryRef": "antecedents",
+              "displayName": "If a line item is ..."
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "association_rules"
+                    }
+                  },
+                  "Property": "support"
+                }
+              },
+              "queryRef": "association_rules.support",
+              "nativeQueryRef": "support",
+              "displayName": "Support"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "association_rules"
+                    }
+                  },
+                  "Property": "confidence"
+                }
+              },
+              "queryRef": "association_rules.confidence",
+              "nativeQueryRef": "confidence",
+              "displayName": "Late (confidence)"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "association_rules"
+                    }
+                  },
+                  "Property": "lift"
+                }
+              },
+              "queryRef": "association_rules.lift",
+              "nativeQueryRef": "lift",
+              "displayName": "Lift"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "association_rules"
+                  }
+                },
+                "Property": "rank"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            },
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Association rules that lead to late delivery (Apriori)'"
+                }
+              }
+            },
+            "titleWrap": {
+              "expr": {
+                "Literal": {
+                  "Value": "true"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

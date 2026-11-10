@@ -1,0 +1,6 @@
+/// Absolute path of the BDM-project folder (ends with a backslash). Change it if you move the folder.
+expression ProjectFolder = "C:\Users\lenovo\Desktop\BDM-project\" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 6f737372-b258-52ba-bad8-8a1e5e1cff96
+
+	annotation PBI_ResultType = Text
+

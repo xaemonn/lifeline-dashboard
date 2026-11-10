@@ -1,0 +1,297 @@
+/// One row per shipment line item (USAID SCMS, 2006-2015).
+table fact_shipment
+	lineageTag: 43ab7f3f-0b20-5923-a681-c8e887b71bf7
+
+	column id
+		dataType: int64
+		formatString: 0
+		lineageTag: 708b2f52-8161-5181-b5fc-110b20c57aa9
+		summarizeBy: none
+		sourceColumn: id
+
+	column country_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 70bf4ce1-a2eb-539c-8a0e-f460a90c0f59
+		summarizeBy: none
+		sourceColumn: country_key
+
+	column vendor_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 90fd7683-645b-5e27-b3c1-64bd3453f53c
+		summarizeBy: none
+		sourceColumn: vendor_key
+
+	column product_key
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 668e11ad-83e4-5c64-93ef-a1f8c0eda0f4
+		summarizeBy: none
+		sourceColumn: product_key
+
+	column project_code
+		dataType: string
+		lineageTag: 926d4948-b232-57d6-8585-96144a50fd46
+		summarizeBy: none
+		sourceColumn: project_code
+
+	column po_so_no
+		dataType: string
+		lineageTag: e494baf0-5230-53bc-ac85-34cf4b8f71de
+		summarizeBy: none
+		sourceColumn: po_so_no
+
+	column asn_dn_no
+		dataType: string
+		lineageTag: 84cf7498-4409-582d-9627-aee8e4be65dc
+		summarizeBy: none
+		sourceColumn: asn_dn_no
+
+	column managed_by
+		dataType: string
+		lineageTag: 0f1f7769-49d1-5f74-b177-7313aba2d396
+		summarizeBy: none
+		sourceColumn: managed_by
+
+	column fulfill_via
+		dataType: string
+		lineageTag: d0c275b4-c712-5f4f-be1a-3a15a9c62a6b
+		summarizeBy: none
+		sourceColumn: fulfill_via
+
+	column inco_term
+		dataType: string
+		lineageTag: b0393a2b-26b1-5409-aa0b-d16b47e2767f
+		summarizeBy: none
+		sourceColumn: inco_term
+
+	column shipment_mode
+		dataType: string
+		lineageTag: ea66b313-5a5d-5108-9543-9dc9ff898577
+		summarizeBy: none
+		sourceColumn: shipment_mode
+
+	column manufacturing_site
+		dataType: string
+		lineageTag: 170d537c-f7d7-51d3-99cd-696b470bf2b4
+		summarizeBy: none
+		sourceColumn: manufacturing_site
+
+	column pq_sent_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 683cf2ee-a82e-500f-b8d5-f864af4bca70
+		summarizeBy: none
+		sourceColumn: pq_sent_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column po_sent_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: f9a60bbc-e479-5924-83b5-a69232d274ef
+		summarizeBy: none
+		sourceColumn: po_sent_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column scheduled_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 5775f685-1e66-545f-a76f-33e391562f74
+		summarizeBy: none
+		sourceColumn: scheduled_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column delivered_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 4b599cdd-5cb1-5b3b-8b70-77061ca77759
+		summarizeBy: none
+		sourceColumn: delivered_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column recorded_date
+		dataType: dateTime
+		formatString: yyyy-mm-dd
+		lineageTag: 628e10c6-12b7-5929-be37-306fc2248726
+		summarizeBy: none
+		sourceColumn: recorded_date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column quantity_packs
+		dataType: int64
+		formatString: 0
+		lineageTag: b67fef16-ea20-509f-8520-ad2890c7693e
+		summarizeBy: sum
+		sourceColumn: quantity_packs
+
+	column units_total
+		dataType: int64
+		formatString: 0
+		lineageTag: be887b48-f603-5497-991d-f0a71dd0d0bf
+		summarizeBy: sum
+		sourceColumn: units_total
+
+	column line_value_usd
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 93a2a57d-667a-5b43-9da5-6eb779378644
+		summarizeBy: sum
+		sourceColumn: line_value_usd
+
+	column pack_price_usd
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 63cacebb-0326-5348-8d1a-589e732e0a47
+		summarizeBy: sum
+		sourceColumn: pack_price_usd
+
+	column unit_price_usd
+		dataType: double
+		formatString: #,0.00
+		lineageTag: ea8fde3f-044f-5586-9714-c0f2d39e7609
+		summarizeBy: sum
+		sourceColumn: unit_price_usd
+
+	column weight_kg
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 54f55e9e-4fbf-54e9-bbba-efe3c7949768
+		summarizeBy: sum
+		sourceColumn: weight_kg
+
+	column weight_kg_alloc
+		dataType: double
+		isHidden
+		formatString: #,0.00
+		lineageTag: f44cd472-8486-5457-b44c-a2340f835d41
+		summarizeBy: sum
+		sourceColumn: weight_kg_alloc
+
+	column weight_status
+		dataType: string
+		lineageTag: bdc42f65-cdca-5bde-ad57-0383f839cd23
+		summarizeBy: none
+		sourceColumn: weight_status
+
+	column freight_usd
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 6fc2a3e1-8419-5769-bf51-851444b79b22
+		summarizeBy: sum
+		sourceColumn: freight_usd
+
+	column freight_usd_alloc
+		dataType: double
+		isHidden
+		formatString: \$#,0
+		lineageTag: 255b2098-0561-5be4-8ec7-9171aa620c86
+		summarizeBy: sum
+		sourceColumn: freight_usd_alloc
+
+	column freight_status
+		dataType: string
+		lineageTag: 30236aab-0abe-512d-aebf-edb70f96bbd8
+		summarizeBy: none
+		sourceColumn: freight_status
+
+	column insurance_usd
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 623e56e8-96eb-537c-8408-c4e62d6dfae7
+		summarizeBy: sum
+		sourceColumn: insurance_usd
+
+	column total_landed_cost_usd
+		dataType: double
+		formatString: \$#,0
+		lineageTag: 67739327-2652-545c-9824-92b0142353d1
+		summarizeBy: sum
+		sourceColumn: total_landed_cost_usd
+
+	column delay_days
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b5284d7-dcf2-5ff1-9139-01deb385f34d
+		summarizeBy: sum
+		sourceColumn: delay_days
+
+	column is_late
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 93aa7909-0a7c-54ee-b159-a45a84dd959a
+		summarizeBy: none
+		sourceColumn: is_late
+
+	column delivery_status
+		dataType: string
+		lineageTag: ac6731af-f718-53be-b5c8-ccc912d7e56b
+		summarizeBy: none
+		sourceColumn: delivery_status
+		sortByColumn: delivery_status_order
+
+	column delivery_status_order
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 931c37be-9f0d-5fc1-a9b2-1e1407040cd7
+		summarizeBy: none
+		sourceColumn: delivery_status_order
+
+	column lead_time_days
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 1cfee9ce-ca93-56c2-9ef8-fe1780520747
+		summarizeBy: sum
+		sourceColumn: lead_time_days
+
+	column pq_to_po_days
+		dataType: double
+		formatString: #,0.00
+		lineageTag: f8340469-cca7-5f08-af8d-93af9e187af7
+		summarizeBy: sum
+		sourceColumn: pq_to_po_days
+
+	column recording_lag_days
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 689669ed-8620-5bef-8607-8704ead33ae9
+		summarizeBy: sum
+		sourceColumn: recording_lag_days
+
+	column freight_per_kg
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 5ea5f9f9-0397-53d7-b500-54675cf8ca6d
+		summarizeBy: sum
+		sourceColumn: freight_per_kg
+
+	column freight_pct_of_value
+		dataType: double
+		formatString: #,0.00
+		lineageTag: 1a435932-01d2-5bcf-ab60-f23778304b7e
+		summarizeBy: sum
+		sourceColumn: freight_pct_of_value
+
+	partition fact_shipment = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(ProjectFolder & "data\powerbi\fact_shipment.csv"), [Delimiter = ",", Encoding = 65001, QuoteStyle = QuoteStyle.Csv]),
+				    Promoted = Table.PromoteHeaders(Source, [PromoteAllScalars = true]),
+				    Blanks = Table.TransformColumns(Promoted, {}, each if _ = "" then null else _),
+				    Typed = Table.TransformColumnTypes(Blanks, {{"id", Int64.Type}, {"country_key", Int64.Type}, {"vendor_key", Int64.Type}, {"product_key", Int64.Type}, {"project_code", type text}, {"po_so_no", type text}, {"asn_dn_no", type text}, {"managed_by", type text}, {"fulfill_via", type text}, {"inco_term", type text}, {"shipment_mode", type text}, {"manufacturing_site", type text}, {"pq_sent_date", type date}, {"po_sent_date", type date}, {"scheduled_date", type date}, {"delivered_date", type date}, {"recorded_date", type date}, {"quantity_packs", Int64.Type}, {"units_total", Int64.Type}, {"line_value_usd", type number}, {"pack_price_usd", type number}, {"unit_price_usd", type number}, {"weight_kg", type number}, {"weight_kg_alloc", type number}, {"weight_status", type text}, {"freight_usd", type number}, {"freight_usd_alloc", type number}, {"freight_status", type text}, {"insurance_usd", type number}, {"total_landed_cost_usd", type number}, {"delay_days", Int64.Type}, {"is_late", Int64.Type}, {"delivery_status", type text}, {"delivery_status_order", Int64.Type}, {"lead_time_days", type number}, {"pq_to_po_days", type number}, {"recording_lag_days", type number}, {"freight_per_kg", type number}, {"freight_pct_of_value", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_ResultType = Table
+

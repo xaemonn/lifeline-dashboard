@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "LifelineDashboard"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "434e84d8-d04b-5301-8221-416f13643956"
+  }
+}

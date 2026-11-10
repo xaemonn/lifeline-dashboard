@@ -1,0 +1,68 @@
+/// Calendar 2006-2015, marked as date table.
+table dim_date
+	lineageTag: 2311901d-2f6d-5d5c-be07-c7fac9929226
+	dataCategory: Time
+
+	column Date
+		dataType: dateTime
+		isKey
+		formatString: yyyy-mm-dd
+		lineageTag: 8e9e5b26-7003-5dd7-ba25-c5514adf85d6
+		summarizeBy: none
+		sourceColumn: Date
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Year
+		dataType: int64
+		formatString: 0
+		lineageTag: 070890e9-26ee-54c8-9f00-e8ea30b6bcfb
+		summarizeBy: none
+		sourceColumn: Year
+
+	column Quarter
+		dataType: string
+		lineageTag: 91c55eca-29b4-53e8-a900-f23acaad4602
+		summarizeBy: none
+		sourceColumn: Quarter
+
+	column MonthNo
+		dataType: int64
+		isHidden
+		formatString: 0
+		lineageTag: 9724a776-494c-579e-8a2a-49c77e9b5ee4
+		summarizeBy: none
+		sourceColumn: MonthNo
+
+	column Month
+		dataType: string
+		lineageTag: c29cfb32-b736-54a7-a1d4-251f96de0613
+		summarizeBy: none
+		sourceColumn: Month
+		sortByColumn: MonthNo
+
+	column YearMonth
+		dataType: string
+		lineageTag: 0a7faef6-a590-5810-8d9b-6044dfc42a95
+		summarizeBy: none
+		sourceColumn: YearMonth
+
+	partition dim_date = m
+		mode: import
+		source =
+				let
+				    StartDate = #date(2006, 1, 1),
+				    EndDate = #date(2015, 12, 31),
+				    Dates = List.Dates(StartDate, Duration.Days(EndDate - StartDate) + 1, #duration(1, 0, 0, 0)),
+				    AsTable = Table.FromList(Dates, Splitter.SplitByNothing(), {"Date"}),
+				    Typed = Table.TransformColumnTypes(AsTable, {{"Date", type date}}),
+				    AddYear = Table.AddColumn(Typed, "Year", each Date.Year([Date]), Int64.Type),
+				    AddQuarter = Table.AddColumn(AddYear, "Quarter", each "Q" & Text.From(Date.QuarterOfYear([Date])), type text),
+				    AddMonthNo = Table.AddColumn(AddQuarter, "MonthNo", each Date.Month([Date]), Int64.Type),
+				    AddMonth = Table.AddColumn(AddMonthNo, "Month", each Date.ToText([Date], "MMM", "en-US"), type text),
+				    AddYearMonth = Table.AddColumn(AddMonth, "YearMonth", each Date.ToText([Date], "yyyy-MM"), type text)
+				in
+				    AddYearMonth
+
+	annotation PBI_ResultType = Table
+

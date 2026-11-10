@@ -1,0 +1,21 @@
+relationship 682f5dd1-6e0c-560f-9274-9dd9d789b2c4
+	fromColumn: fact_shipment.country_key
+	toColumn: dim_country.country_key
+
+relationship 20978e11-d262-563c-803a-c5fceefce406
+	fromColumn: fact_shipment.vendor_key
+	toColumn: dim_vendor.vendor_key
+
+relationship ecfff6cc-853e-5583-b740-192cf3aae4b1
+	fromColumn: fact_shipment.product_key
+	toColumn: dim_product.product_key
+
+relationship 6b733f13-3b99-58c9-bebe-0569430d538b
+	fromColumn: fact_shipment.delivered_date
+	toColumn: dim_date.Date
+
+relationship 2b5ad1d7-3c84-52c1-ae08-64c842e6dc00
+	isActive: false
+	fromColumn: fact_shipment.scheduled_date
+	toColumn: dim_date.Date
+
